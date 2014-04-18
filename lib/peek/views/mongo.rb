@@ -9,7 +9,7 @@ require 'atomic'
 # - :receive_message
 
 # Instrument Mongo time
-class Mongo::Connection
+class Mongo::Networking
   class << self
     attr_accessor :command_time, :command_count
   end
@@ -21,8 +21,8 @@ class Mongo::Connection
     send_message_without_timing(*args)
   ensure
     duration = (Time.now - start)
-    Mongo::Connection.command_time.update { |value| value + duration }
-    Mongo::Connection.command_count.update { |value| value + 1 }
+    Mongo::Networking.command_time.update { |value| value + duration }
+    Mongo::Networking.command_count.update { |value| value + 1 }
   end
   alias_method_chain :send_message, :timing
 
@@ -31,8 +31,8 @@ class Mongo::Connection
     send_message_with_gle_without_timing(*args)
   ensure
     duration = (Time.now - start)
-    Mongo::Connection.command_time.update { |value| value + duration }
-    Mongo::Connection.command_count.update { |value| value + 1 }
+    Mongo::Networking.command_time.update { |value| value + duration }
+    Mongo::Networking.command_count.update { |value| value + 1 }
   end
   alias_method_chain :send_message_with_gle, :timing
 
@@ -41,8 +41,8 @@ class Mongo::Connection
     receive_message_without_timing(*args)
   ensure
     duration = (Time.now - start)
-    Mongo::Connection.command_time.update { |value| value + duration }
-    Mongo::Connection.command_count.update { |value| value + 1 }
+    Mongo::Networking.command_time.update { |value| value + duration }
+    Mongo::Networking.command_count.update { |value| value + 1 }
   end
   alias_method_chain :receive_message, :timing
 end

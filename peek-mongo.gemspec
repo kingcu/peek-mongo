@@ -18,6 +18,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
 
   gem.add_dependency 'peek'
-  gem.add_dependency 'mongo', '>= 1.8'
+  gem.add_dependency 'mongo'#, '>= 1.10'
   gem.add_dependency 'atomic', '>= 1.0.0'
 end
